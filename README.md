@@ -1,7 +1,7 @@
 # Imaging Optics - MICRO-421 - 2024
 
 [Imaging optics](https://edu.epfl.ch/coursebook/fr/imaging-optics-MICRO-421) is a course at [EPFL](https://www.epfl.ch/en/) taught by [Demetri Psaltis](https://people.epfl.ch/demetri.psaltis/?lang=en).
-The teaching assistant are [Zahra Basiri](https://people.epfl.ch/zahra.basiri?lang=en) and [Felix Wechsler](https://people.epfl.ch/felix.wechsler)
+The teaching assistants are [Zahra Basiri](https://people.epfl.ch/zahra.basiri?lang=en) and [Felix Wechsler](https://people.epfl.ch/felix.wechsler)
 
 For official information see [the course Moodle](https://moodle.epfl.ch/).
 This repository provides the source code for the homework.
