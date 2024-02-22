@@ -20,4 +20,5 @@ julia> using Pluto
 julia> Pluto.run()
 ```
 
-A browser should open and you can open the respective notebook files.
+A browser should open with the PLuto notebook.
+You can copy & paste the link of the respective homework (for example [HW01.jl](https://github.com/EPFL-LAPD/Imaging-Optics-Micro-421-2024/blob/main/HW01.jl)) into the Pluto file browser.
