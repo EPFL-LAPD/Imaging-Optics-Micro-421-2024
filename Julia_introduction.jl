@@ -26,6 +26,27 @@ using TestImages, ImageShow, ImageIO
 # ╔═╡ 02c467ad-d7e2-4987-955a-e6d0feca6024
 TableOfContents()
 
+# ╔═╡ 9eea2478-cb96-46d9-894e-c9aee3d9c140
+md"Shift+Enter executes a cell"
+
+# ╔═╡ e8122b7f-49e9-49c4-af89-2a2d76035cce
+z = 1100
+
+# ╔═╡ 06930323-238d-4c14-9884-177791957d75
+y = 10
+
+# ╔═╡ e8a764bf-b448-4eb0-a0a9-41144e057044
+z + y
+
+# ╔═╡ c395ea05-0bd5-4c6c-a625-c6caab9b4b91
+
+
+# ╔═╡ 9a118f45-1c08-467b-8b94-087cb9c6932f
+f(x::String) = "this is string"
+
+# ╔═╡ 7ba52aaa-fb25-44d1-8f75-136e6d1c267a
+f(x::Float64) = 1
+
 # ╔═╡ 362a8158-ecd3-4dfc-b57c-386e20c6fc26
 md"""
 # Julia
@@ -52,10 +73,19 @@ A relatively new dynamic programming language (≈ 5 years since 1.0)
 md"# Arrays"
 
 # ╔═╡ 4591f48b-1415-453c-ae74-3f7e4ea47d76
-arr = ones(Float32, (10, 10));
+arr = ones((10, 10))
 
 # ╔═╡ 1c95056f-7e50-4b87-b6b2-479172f356c8
 arr[0, 0]
+
+# ╔═╡ 495532e4-bcdf-4605-93ce-a1fe0287b492
+vect = [1,2,3,4]
+
+# ╔═╡ 635e7316-ac6e-4ccb-8bba-b6bc8d9080ad
+vect[begin]
+
+# ╔═╡ acfc2775-4bb0-488e-8ff9-8c267e2fe821
+
 
 # ╔═╡ c0d4a0cd-f77c-42cc-b67d-b1992432227c
 arr[1,1]
@@ -63,8 +93,8 @@ arr[1,1]
 # ╔═╡ 3b8f19dc-7dbc-4082-90ef-d5a0c4d18629
 size(arr)
 
-# ╔═╡ 13d12ec2-5a94-44be-a9e5-003905f94457
-size(arr, 1)
+# ╔═╡ 1bc20e49-5be7-437d-8591-bcf5758ac128
+[1 2 3; 4 5 6; 7 8 9] * [1,2,3]
 
 # ╔═╡ d41c9e1a-69b9-4f5d-8ce4-ddee0d420d01
 arr * arr # matrix multiplication
@@ -72,8 +102,20 @@ arr * arr # matrix multiplication
 # ╔═╡ 8e61d167-f8f4-48d0-875c-13823295e81d
 arr .* arr # point wise
 
-# ╔═╡ 1246b117-2fcb-48a2-a00a-ef86587eacb4
+# ╔═╡ 3f0a531f-4891-4003-8dd2-82f1784e5309
+f(x) = sqrt(abs(sin(cos(x))))
 
+# ╔═╡ f02da74f-cc4f-4bb8-98e0-c46eac2ffd3f
+f("hi")
+
+# ╔═╡ 2cc29b33-21ae-41f2-be29-df4cfe926887
+f(1.0)
+
+# ╔═╡ 10db5c82-79e0-4df8-92a1-9e42ea7cec70
+#f(arr2);
+
+# ╔═╡ 36b688ad-1d62-42c7-95ff-6efafad13f0f
+exp(4)
 
 # ╔═╡ 0c02510b-f146-44ab-bdf7-84eb15f6f27c
 md"# Small for loop array example
@@ -85,14 +127,14 @@ Consider an array where we want to sum up all positive numbers
 Γ = randn((100_000, ));
 
 # ╔═╡ 1291ae19-1f3d-4216-b54a-057cadb84a04
-@time result1 = sum(Γ[ Γ .> 0.0])
+@time result1 = sum(Γ[Γ .> 0.0])
 
 # ╔═╡ f4602c16-f851-4765-b166-469b2d90dfaf
 function sum_positive(Γ)
-	res = zero(eltype(Γ))
-	for entry in Γ
-		if entry > 0
-			res += entry
+	res = 0.0
+	for element in Γ
+		if element > 0
+			res += element
 		end
 	end
 	return res
@@ -107,8 +149,26 @@ end
 # ╔═╡ ec233b68-1823-48e4-ad59-fd91cc669939
 md"# Elementwise application"
 
-# ╔═╡ 13baca81-8508-4619-8f85-a036657f23fb
-arr2 = [1.0, 2, 3, 4, 5]
+# ╔═╡ 13d12ec2-5a94-44be-a9e5-003905f94457
+size(arr2, 2)
+
+# ╔═╡ 3ade2bec-bf6b-44a7-9243-03a1848d5338
+arr2 * arr2 
+
+# ╔═╡ 9f8f0ccd-9418-4f10-9c50-af8ca8cc7b6c
+arr2 .* arr2
+
+# ╔═╡ d20262e9-dab3-4d49-97e2-fa0fef769006
+arr2 .^2
+
+# ╔═╡ 28e90fbf-caa3-4c0c-8dd6-5d407532d9c1
+exp(arr2)
+
+# ╔═╡ 5ac7a41e-d5e0-4a4c-967b-1ed9b654ac35
+exp.(arr2)
+
+# ╔═╡ 3e600f19-50a0-49b2-a9b8-f2cb5a408ff0
+f.(arr2)
 
 # ╔═╡ adb7992b-a0dd-470e-81ff-482ff31da58b
 sin.(arr2)
@@ -137,11 +197,29 @@ img = Float32.(testimage("resolution_test_512"))
 # ╔═╡ 65abc968-bff0-435e-9321-8289cb9520a6
 simshow(img)
 
+# ╔═╡ 58c18334-49c5-4bc0-892b-f45be5601d9c
+mandril = Float64.(testimage("mandril_gray"))
+
 # ╔═╡ 9f8d703b-d727-4aa7-bf37-50457badf226
-simshow(exp.(1im .* 5 .* img))
+simshow(mandril .* exp.(1im .* 0.2 .* (-256:255)))
 
 # ╔═╡ 5c23fb14-3388-4325-8661-05ce42e274c3
-heatmap(img)
+heatmap(img, cmap=:acton)
+
+# ╔═╡ 7e02a574-b6a5-41d5-af82-200b7e2da98f
+# ╠═╡ disabled = true
+#=╠═╡
+arr2 = rand(10, 100)
+  ╠═╡ =#
+
+# ╔═╡ 13baca81-8508-4619-8f85-a036657f23fb
+# ╠═╡ disabled = true
+#=╠═╡
+arr2 = [1.0, 2, 3, 4, 5]
+  ╠═╡ =#
+
+# ╔═╡ 1246b117-2fcb-48a2-a00a-ef86587eacb4
+arr2 = [1 2; 3 4]
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1487,16 +1565,39 @@ version = "1.4.1+1"
 # ╔═╡ Cell order:
 # ╠═82f0bf5f-48a0-46ff-9667-77aea9688d62
 # ╠═02c467ad-d7e2-4987-955a-e6d0feca6024
+# ╟─9eea2478-cb96-46d9-894e-c9aee3d9c140
+# ╠═e8122b7f-49e9-49c4-af89-2a2d76035cce
+# ╠═06930323-238d-4c14-9884-177791957d75
+# ╠═e8a764bf-b448-4eb0-a0a9-41144e057044
+# ╠═c395ea05-0bd5-4c6c-a625-c6caab9b4b91
+# ╠═9a118f45-1c08-467b-8b94-087cb9c6932f
+# ╠═7ba52aaa-fb25-44d1-8f75-136e6d1c267a
+# ╠═f02da74f-cc4f-4bb8-98e0-c46eac2ffd3f
+# ╠═2cc29b33-21ae-41f2-be29-df4cfe926887
 # ╟─362a8158-ecd3-4dfc-b57c-386e20c6fc26
 # ╟─e77f6638-f648-428d-8ca4-51f78b469827
 # ╠═4591f48b-1415-453c-ae74-3f7e4ea47d76
 # ╠═1c95056f-7e50-4b87-b6b2-479172f356c8
+# ╠═495532e4-bcdf-4605-93ce-a1fe0287b492
+# ╠═635e7316-ac6e-4ccb-8bba-b6bc8d9080ad
+# ╠═acfc2775-4bb0-488e-8ff9-8c267e2fe821
 # ╠═c0d4a0cd-f77c-42cc-b67d-b1992432227c
 # ╠═3b8f19dc-7dbc-4082-90ef-d5a0c4d18629
+# ╠═7e02a574-b6a5-41d5-af82-200b7e2da98f
 # ╠═13d12ec2-5a94-44be-a9e5-003905f94457
+# ╠═1bc20e49-5be7-437d-8591-bcf5758ac128
 # ╠═d41c9e1a-69b9-4f5d-8ce4-ddee0d420d01
 # ╠═8e61d167-f8f4-48d0-875c-13823295e81d
 # ╠═1246b117-2fcb-48a2-a00a-ef86587eacb4
+# ╠═3ade2bec-bf6b-44a7-9243-03a1848d5338
+# ╠═9f8f0ccd-9418-4f10-9c50-af8ca8cc7b6c
+# ╠═d20262e9-dab3-4d49-97e2-fa0fef769006
+# ╠═28e90fbf-caa3-4c0c-8dd6-5d407532d9c1
+# ╠═5ac7a41e-d5e0-4a4c-967b-1ed9b654ac35
+# ╠═3f0a531f-4891-4003-8dd2-82f1784e5309
+# ╠═10db5c82-79e0-4df8-92a1-9e42ea7cec70
+# ╠═3e600f19-50a0-49b2-a9b8-f2cb5a408ff0
+# ╠═36b688ad-1d62-42c7-95ff-6efafad13f0f
 # ╟─0c02510b-f146-44ab-bdf7-84eb15f6f27c
 # ╠═1a6b1340-4f08-4a72-88eb-b70944619afa
 # ╠═1291ae19-1f3d-4216-b54a-057cadb84a04
@@ -1517,6 +1618,7 @@ version = "1.4.1+1"
 # ╠═f1898742-3271-4551-b8c0-1fd1421b8bbb
 # ╠═65abc968-bff0-435e-9321-8289cb9520a6
 # ╠═9f8d703b-d727-4aa7-bf37-50457badf226
+# ╠═58c18334-49c5-4bc0-892b-f45be5601d9c
 # ╠═5c23fb14-3388-4325-8661-05ce42e274c3
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
