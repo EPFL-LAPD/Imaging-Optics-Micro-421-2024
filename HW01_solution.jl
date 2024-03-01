@@ -241,7 +241,7 @@ x2 = range(-Lx/2, Lx/2, size(mandril_large, 1))
 y2 = range(-Ly/2, Ly/2, size(mandril_large, 1))
 
 # ╔═╡ 1c1d36b2-1d2d-4b81-af44-34951569628c
-@bind iz2 PlutoUI.Slider(eachindex(z2))
+@bind iz2 PlutoUI.Slider(eachindex(z2), default=282)
 
 # ╔═╡ 19822b65-a4c8-4e11-8607-1009fb180f4c
 md"
@@ -289,6 +289,12 @@ Lrec = 2e-3
 # ╔═╡ 4c7096ad-8b6d-4808-938c-9d5cc5b272cb
 Nrec = 500
 
+# ╔═╡ 1b223678-2328-408c-a152-12fb955c7224
+yrec = range(-Lrec / 2, Lrec / 2, Nrec)
+
+# ╔═╡ 0dd4c703-4eee-4a59-b03c-393606855f00
+xrec = yrec
+
 # ╔═╡ a49957f5-b120-4e7f-a6fb-c562e0aebd80
 aperture_size = (20e-6, 200e-6) ./ 2e-3 .* Nrec
 
@@ -313,7 +319,7 @@ propagation distance z = $(round(z_aperture[iz3] * 1000, digits=3))mm
 "
 
 # ╔═╡ 27d270b9-5f3a-48eb-b5c8-79602bcbf25b
-heatmap(abs.(aperture_p[:, :, iz3]), xlabel="in mm", ylabel="in mm")
+heatmap(xrec .* 1000, yrec .* 1000, abs.(aperture_p[:, :, iz3]), xlabel="x in mm", ylabel="y in mm")
 
 # ╔═╡ 48073d7a-2257-4134-aead-aa9e5238f60e
 md"""## 3. Grating
@@ -325,8 +331,16 @@ Then, repeat this experiment for 200-μm separation as well. Comment on your res
 Hint: use again the `box` function. And then use `circshift`.
 """
 
+# ╔═╡ 32e786fc-681c-4328-9db2-4affc68c93f8
+md"### 3.1 Solution
+For short propagation distances first we see diffraction happening across the first dimension (y axis).
+The light spreads across y with longer propagation distance.
+
+For very long distances, diffraction also across x impacts and spreads the light across x.
+"
+
 # ╔═╡ dec9d570-8759-4455-bec6-52660cac36da
-spacing_N = Lrec / 50e-3 * Nrec
+spacing_N = round(Int, 50e-6 / Lrec * Nrec)
 
 # ╔═╡ 8eacfde4-935f-457b-92fe-5cd84edc3857
 grating = aperture .+ circshift(aperture, (spacing_N,0)) .+ circshift(aperture, (-spacing_N, 0)) .+ circshift(aperture, (2*spacing_N, 0)) .+ circshift(aperture, (-2 * spacing_N, 0));
@@ -337,13 +351,47 @@ grating_p = bpm(grating, λ, Lrec, Lrec, z_aperture);
 # ╔═╡ e87820dd-b62b-4e08-81b6-abb97540e07d
 @bind iz4 PlutoUI.Slider(eachindex(z))
 
+# ╔═╡ bd98a76d-9dd0-456a-b257-818e55108a06
+Lrec
+
 # ╔═╡ a8588063-bcfb-44d3-8617-ad7bf79bef37
 md"
 propagation distance z = $(round(z_aperture[iz4] * 1000, digits=3))mm
 "
 
 # ╔═╡ 7496534a-54b7-4a8a-b09d-72eb5efa7835
-heatmap(abs.(grating_p[:, :, iz4]), xlabel="in mm", ylabel="in mm")
+heatmap(xrec .* 1000, yrec .* 1000, abs.(grating_p[:, :, iz4]), xlabel="x in mm", ylabel="y in mm")
+
+# ╔═╡ 835114d1-c642-4b51-8b4d-52849265d39e
+md"### 3.2 Solution
+Similar to before.
+
+But since the spacing between the stripes is bigger, the distance needs to be longer that we see the impact of the interference of the individual apertures.
+
+"
+
+# ╔═╡ b299f4e2-7d1e-4420-a67a-df81b58635bc
+spacing_N2 = round(Int, 200e-6 / Lrec * Nrec)
+
+# ╔═╡ 6f5f05fb-acf6-4d20-b1af-7bbd622a58b6
+grating2 = aperture .+ circshift(aperture, (spacing_N2,0)) .+ circshift(aperture, (-spacing_N2, 0)) .+ circshift(aperture, (2*spacing_N2, 0)) .+ circshift(aperture, (-2 * spacing_N2, 0));
+
+# ╔═╡ 26aa49ea-570a-411e-bdc4-c6115c4953ab
+grating_p2 = bpm(grating2, λ, Lrec, Lrec, z_aperture);
+
+# ╔═╡ ba341031-5535-40cf-a44d-7fb149349467
+@bind iz5 PlutoUI.Slider(eachindex(z))
+
+# ╔═╡ 8be506a3-cbd6-4198-9b36-357ec987e7fb
+Lrec
+
+# ╔═╡ be7662a6-8c47-4f96-8358-413720ed479d
+md"
+propagation distance z = $(round(z_aperture[iz4] * 1000, digits=3))mm
+"
+
+# ╔═╡ 38915ff7-a8f7-4cfe-ba71-deee0d45413b
+heatmap(xrec, yrec, abs.(grating_p2[:, :, iz5]), xlabel="x in mm", ylabel="y in mm")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -2006,6 +2054,8 @@ version = "1.4.1+1"
 # ╠═f48628e5-1825-486b-9ced-03fede0da7a9
 # ╠═0b4d696e-8218-413f-be22-eab08829efbf
 # ╠═4c7096ad-8b6d-4808-938c-9d5cc5b272cb
+# ╠═1b223678-2328-408c-a152-12fb955c7224
+# ╠═0dd4c703-4eee-4a59-b03c-393606855f00
 # ╠═a49957f5-b120-4e7f-a6fb-c562e0aebd80
 # ╠═fef13208-7aad-4e9f-9140-ccc59e91d9ae
 # ╠═6095b2ae-b516-47ba-8301-159749f659d9
@@ -2015,11 +2065,21 @@ version = "1.4.1+1"
 # ╟─7b478e05-c748-48bf-9037-d499474968e9
 # ╠═27d270b9-5f3a-48eb-b5c8-79602bcbf25b
 # ╟─48073d7a-2257-4134-aead-aa9e5238f60e
+# ╟─32e786fc-681c-4328-9db2-4affc68c93f8
 # ╠═dec9d570-8759-4455-bec6-52660cac36da
 # ╠═8eacfde4-935f-457b-92fe-5cd84edc3857
 # ╠═d18e9f18-d523-401f-8cca-fe9251656e09
 # ╟─e87820dd-b62b-4e08-81b6-abb97540e07d
+# ╠═bd98a76d-9dd0-456a-b257-818e55108a06
 # ╟─a8588063-bcfb-44d3-8617-ad7bf79bef37
 # ╠═7496534a-54b7-4a8a-b09d-72eb5efa7835
+# ╟─835114d1-c642-4b51-8b4d-52849265d39e
+# ╠═b299f4e2-7d1e-4420-a67a-df81b58635bc
+# ╠═6f5f05fb-acf6-4d20-b1af-7bbd622a58b6
+# ╠═26aa49ea-570a-411e-bdc4-c6115c4953ab
+# ╠═ba341031-5535-40cf-a44d-7fb149349467
+# ╠═8be506a3-cbd6-4198-9b36-357ec987e7fb
+# ╠═be7662a6-8c47-4f96-8358-413720ed479d
+# ╠═38915ff7-a8f7-4cfe-ba71-deee0d45413b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
