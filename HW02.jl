@@ -58,9 +58,25 @@ function gauss_beam(y, x, z, λ, w_0)
 	r² = x ^ 2 + y ^ 2
     # don't put exp(i * k * z) into the same exp, it causes some strange wraps
 	return w_0 / gauss_w(z, z_R, w_0) * exp(-r² / gauss_w(z, z_R, w_0)^2) * 
-            exp.(1im * k * z) * 
+            exp(1im * k * z) * 
             exp(1im * (k * r² / 2 / gauss_R(z, z_R) - gauss_ψ(z, z_R)))
 end
+
+# ╔═╡ 9f99ae1e-d0d8-4116-880e-fb39ab93e236
+# please use gauss_R with a Float numbers
+
+# ╔═╡ f9d44b5c-f1fe-46a4-93d4-7b2bf363d99b
+y2 = -1:0.1:1
+
+# ╔═╡ 501627d9-3a78-4797-9017-39da7ccca2d4
+x2 = y2';
+
+# ╔═╡ 13fd614a-5445-4d99-aa61-f9ac6bbe9087
+# just an example how to use gauss_beam
+simshow(gauss_beam.(y2, x2, 0.0, 532e-9, 0.5))
+
+# ╔═╡ eeb77ae8-f409-4ca1-884f-c6c99501078f
+gauss_R(0.0, 0.0)
 
 # ╔═╡ 5f21a849-0272-4bca-9659-54cd38068e09
 """
@@ -1913,6 +1929,11 @@ version = "1.4.1+1"
 # ╠═f326cd36-9c05-4b1c-81c0-56c954cd51f3
 # ╠═7c6b4ddd-ca5a-4b23-96f7-e896fb1cda6d
 # ╠═dd16735b-c1d6-4977-a396-a3e23823ee68
+# ╠═9f99ae1e-d0d8-4116-880e-fb39ab93e236
+# ╠═f9d44b5c-f1fe-46a4-93d4-7b2bf363d99b
+# ╠═501627d9-3a78-4797-9017-39da7ccca2d4
+# ╠═13fd614a-5445-4d99-aa61-f9ac6bbe9087
+# ╠═eeb77ae8-f409-4ca1-884f-c6c99501078f
 # ╟─5f21a849-0272-4bca-9659-54cd38068e09
 # ╟─aaf7cf09-1244-461b-aaa6-731a65fc3d57
 # ╟─ac3147f3-1831-4ca8-b9d9-da78b3a9b6c3
