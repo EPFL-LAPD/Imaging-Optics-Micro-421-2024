@@ -321,7 +321,7 @@ md"# 3. Convolution Theorem
 The convolution theorem states that
 
 $$\mathcal{F} [(h * g)(x)] = \mathcal{F}[h] \cdot \mathcal{F}[h]$$
-where $*$ is the convolution operator and $\cdot$ os the elementwise multiplication.
+where $*$ is the convolution operator and $\cdot$ is the elementwise multiplication.
 
 
 ## Question
