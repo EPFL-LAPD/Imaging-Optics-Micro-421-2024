@@ -411,7 +411,7 @@ end
 
 # ╔═╡ eef84a2a-6395-48e1-ab9e-2ce31032f47f
 function my_conv_fixed_rft(img, psf)
-	return real.(irfft(rfft(img) .* rfft(psf)))
+	return (irft(rft(img) .* rft(psf), size(img, 1)))
 end
 
 # ╔═╡ f3ede0a4-4219-455d-9c38-d10181584650
@@ -421,7 +421,7 @@ simshow(ft(img), γ=0.1)
 simshow(ft(img), γ=0.1)
 
 # ╔═╡ 24da8e1c-205d-4ffe-b8c1-3904565a1fa3
-[simshow(my_conv_fixed(img, psf)) simshow(my_conv_fixed_ft(img, psf))]
+[simshow(my_conv_fixed(img, psf)) simshow(my_conv_fixed_ft(img, psf))  simshow(my_conv_fixed_rft(img, psf))]
 
 # ╔═╡ 55243ccc-f66a-446d-a4bd-0b2df4a86610
 simshow(fft(img), γ=0.3)
